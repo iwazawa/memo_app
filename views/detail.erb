@@ -1,0 +1,26 @@
+<main>
+  <nav class="home">
+    <a href="../"><i class="fas fa-home"> home</i></a>
+  </nav>
+
+  <section class="contents">
+    <h2><%= @title %></h2>
+    <p><%= @body.gsub(/\r\n|\r|\n/, '<br>') %></p>
+  </section>
+
+  <section class="form_edit">
+    <form method="get" action="/edit">
+      <input class="button edit" type="submit" value="Edit">
+      <input type="hidden" name='title' value="<%= @title %>">
+      <input type="hidden" name='body' value="<%= @body.gsub(/\r\n|\r|\n/, '\r\n') %>">
+      <input type="hidden" name='id' value="<%= @id %>">
+    </form>
+
+    <form method="post" action="/delete">
+      <input class="button delete" type="submit" value="Delete">
+      <input type="hidden" name="id" value="<%= @id %>">
+      <input type="hidden" name="_method" value="delete">
+    </form>
+  </section>
+
+</main>
