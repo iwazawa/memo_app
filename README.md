@@ -1,8 +1,6 @@
 # どんなアプリ？
 Sinatraで動かすシンプルなメモアプリです。
-
-![image](https://user-images.githubusercontent.com/64719552/142552004-45c0c042-3a96-4df8-8421-d906b3217313.png)
-
+[![Image from Gyazo](https://i.gyazo.com/75a660208b026d4226f4a64e4a189411.gif)](https://gyazo.com/75a660208b026d4226f4a64e4a189411)
 
 # 何ができる？
 メモの作成、編集、削除ができます。
