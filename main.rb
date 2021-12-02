@@ -6,15 +6,20 @@ require 'json'
 require 'securerandom'
 require 'cgi'
 
+# idに該当するjsonファイルをhashに変換する
+def json_parse(id)
+  File.open("memos/#{id}.json") do |file|
+    JSON.parse(file.read)
+  end
+end
+
 get '/' do
   @h = ''
   files = Dir.glob('*', base: 'memos')
   files.each do |file|
-    File.open("memos/#{file}") do |f|
-      string = f.read
-      hash = JSON.parse(string)
-      @h += "<li><a href=\"/detail?id=#{hash['id']}\">#{hash['title']}</a></li>"
-    end
+    id = file.delete('.json')
+    memo_contents = json_parse(id)
+    @h += "<li><a href=\"/detail?id=#{memo_contents['id']}\">#{memo_contents['title']}</a></li>"
   end
   erb :index
 end
@@ -25,12 +30,9 @@ end
 
 get '/detail' do
   @id = params[:id]
-  File.open("memos/#{@id}.json") do |file|
-    string = file.read
-    hash = JSON.parse(string)
-    @title = hash['title']
-    @body = hash['body']
-  end
+  memo_contents = json_parse(@id)
+  @title = memo_contents['title']
+  @body = memo_contents['body']
   erb :detail
 end
 
@@ -39,7 +41,7 @@ post '/new' do
   title = CGI.escape_html(params[:title])
   body = CGI.escape_html(params[:body])
   created_at = Time.now
-  hash = {
+  memo_contents = {
     'id' => id,
     'title' => title,
     'body' => body,
@@ -47,7 +49,7 @@ post '/new' do
   }
 
   File.open("./memos/#{id}.json", 'w') do |file|
-    JSON.dump(hash, file)
+    JSON.dump(memo_contents, file)
   end
 
   redirect '/'
@@ -60,26 +62,20 @@ delete '/delete' do
 end
 
 get '/edit' do
-  puts params[:body]
   @id = params[:id]
   @title = params[:title]
   @body = params[:body].gsub('\r\n', "\r\n")
-  p @body
   erb :edit
 end
 
 patch '/edit' do
-  hash = File.open("./memos/#{params[:id]}.json") do |file|
-    string = file.read
-    JSON.parse(string)
-  end
-
-  hash['title'] = CGI.escape_html(params[:title])
-  hash['body'] = CGI.escape_html(params[:body])
-  hash['update_at'] = Time.now
+  memo_contents = json_parse(params[:id])
+  memo_contents['title'] = CGI.escape_html(params[:title])
+  memo_contents['body'] = CGI.escape_html(params[:body])
+  memo_contents['update_at'] = Time.now
 
   File.open("./memos/#{params[:id]}.json", 'w') do |file|
-    JSON.dump(hash, file)
+    JSON.dump(memo_contents, file)
   end
 
   redirect '/'
