@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>Ryoのメモアプリ</title>
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link rel="icon" href="/favicon_512.png" type="image/png">
+  </head>
+  <body>
+    <header>
+      <h1>Memos</h1>
+      <nav>
+        <ul class="global_nav">
+          <li><a href="../">TOP</a></li>
+          <li><a target="_blank" href="https://bootcamp.fjord.jp/">FJORDBOOTCAMP</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <%= yield %>
+
+  <footer>
+    <div class="author">
+      Produced by Ryo
+    </div>
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+<main>
+  <nav class="home">
+    <a href="../"><i class="fas fa-home"> home</i></a>
+  </nav>
+  
+  <section class=form_text_input>
+    <form method="POST" action="/edit">
+    <div class="title_input">
+      <input class="title" type="text" name="title" value="<%= @title %>">
+    </div>
+    <div class="body_input">
+      <textarea class="body" name="body"><%= @body %></textarea>
+    </div>
+    <input class="button save" type="submit" value="Save">
+    <input type="hidden" name="id" value="<%= @id %>">
+    <input type="hidden" name="_method" value="patch">
+    </form>
+  </section>
+</main>
